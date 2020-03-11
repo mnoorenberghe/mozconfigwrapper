@@ -48,7 +48,8 @@ def mozconfig(args=sys.argv[1:]):
                         help="opens the active mozconfig for editing")
     args = parser.parse_args(args)
 
-    current = os.getenv('MOZCONFIG', '')
+    config_path = os.path.realpath(".mozconfig")
+    current = config_path if os.path.exists(config_path) else ""
     if not args.ls and not args.edit:
         if current == '':
             print "No mozconfig activated"

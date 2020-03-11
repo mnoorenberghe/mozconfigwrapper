@@ -26,12 +26,12 @@ function buildwith {
     fi
 
     mozconfig="$BUILDWITH_HOME/$name"
+    ln -f -s "$mozconfig" .mozconfig
     echo "$name" >| "$BUILDWITH_HOME/.active"
-    export MOZCONFIG=$mozconfig
 
     if [ ! "$2" = "silent" ]
     then
-        echo "$MOZCONFIG"
+        echo "$mozconfig"
     fi
     return 0
 }
@@ -104,12 +104,3 @@ function mozconfigwrapper_list_mozconfigs {
 
 mozconfigwrapper_buildwith_home
 mozconfigwrapper_setup_tab_completion
-
-if [ -f "$BUILDWITH_HOME/.active" ]
-then
-    active=`cat "$BUILDWITH_HOME/.active"`
-    if [ ! $active = "" ]
-    then
-        buildwith "$active" "silent"
-    fi
-fi
